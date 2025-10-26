@@ -1,4 +1,6 @@
 import com.github.sarxos.webcam.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -52,10 +54,18 @@ class WebcamViewerExample extends JFrame implements Runnable, WebcamListener, Wi
         private WebcamPanel panel = null;
         private WebcamPicker picker = null;
 
+        public static Logger log;
+
+         public static Logger getLogger(){
+            return log;
+        };
+
         @Override
         public void run() {
 
             Webcam.addDiscoveryListener(this);
+
+            log = (Logger) LogManager.getLogger(WebcamViewerExample.class);
 
             setTitle("Java Webcam Capture POC");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,6 +120,7 @@ class WebcamViewerExample extends JFrame implements Runnable, WebcamListener, Wi
         @Override
         public void webcamOpen(WebcamEvent we) {
             System.out.println("webcam open");
+            log.info("Camera opened");
         }
 
         @Override
